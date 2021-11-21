@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .myvideo {
+            position:relative;
+            padding: 0 0 56.25% 0;
+            height:0;
+            overflow:hidden;
+        }
+        .myvideo iframe,.myvideo object,.myvideo embed {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="myvideo" id="Tesdd">
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var message = /*[[${MainModel}]]*/ 'default';
+        console.log(message);
+
+        var html = message
+        let iframe = document.createElement('iframe');
+        iframe.srcdoc = html;
+        iframe.width = 500;
+        iframe.height = 500;
+        iframe.frameBorder = 0;
+        iframe.allowFullscreen = true;
+
+        var theDiv = document.getElementById("Tesdd");
+        theDiv.appendChild(iframe);
+
+        /*]]>*/
+    </script>
+</body>
+</html>
