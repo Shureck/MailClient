@@ -8,9 +8,14 @@ import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.*;
 import javax.mail.internet.ContentType;
@@ -73,12 +78,35 @@ public class getMail {
 
     @Autowired
     MailRepo mailRepo;
+    @Autowired
+    private JavaMailSender emailSender;
 
     @GetMapping("/")
-    public String mainMail(Model model) throws MessagingException, IOException {
+    public String mainMail(Model model, Integer page) throws MessagingException, IOException {
+        System.out.println(page);
+        Pageable pageable = PageRequest.of(0, 9);
+        if(page != null) {
+            pageable = PageRequest.of(page, 9);
+        }
+        ArrayList<Mail> mailArrayList = new ArrayList<Mail>(mailRepo.findAll(pageable).getContent());
+        System.out.println(mailArrayList.toString());
 
-        ArrayList<Mail> mailArrayList = new ArrayList<Mail>(mailRepo.findAll());
-        System.out.println(mailArrayList);
+        model.addAttribute("MainMail", mailArrayList);
+
+        return "MainMail";
+    }
+
+    @PostMapping("/sendMail")
+    public String sendMail(Model model, String form, String to, String subject, String message){
+
+        System.out.println(form+" " + to + " "+subject+" "+message);
+
+        SimpleMailMessage messaged = new SimpleMailMessage();
+        messaged.setFrom("Sashalev200149@gmail.com");
+        messaged.setTo(to);
+        messaged.setSubject(subject);
+        messaged.setText(message);
+        emailSender.send(messaged);
 
         return "MainMail";
     }
@@ -88,8 +116,18 @@ public class getMail {
         return "NewMail";
     }
 
+    @GetMapping("/readMail")
+    public String readMail(Model model, Long page) throws IOException, MessagingException {
+
+        Mail mail = mailRepo.findMailById(page);
+
+        model.addAttribute("ReadMail",mail);
+
+        return "ReadMail";
+    }
+
     @GetMapping("/read")
-    public String readMail(Model model, int page) throws IOException, MessagingException {
+    public String read(Model model, int page) throws IOException, MessagingException {
 //        Runtime rt = Runtime.getRuntime();
 //        String sttr = "";
 //        String processString = "python3 src/main/java/com/example/demo/controller/AdaMqtt.py";
@@ -147,7 +185,7 @@ public class getMail {
         System.out.println("Body21: " + content.getClass().getName());
         System.out.println("Body22: " + content);
         System.out.println("Body23: " + getTextFromMessage(messages[page]));
-        System.out.println("Body24: " + messages[page].getSentDate());
+        System.out.println("Body24: " + messages[page].getFlags());
         if(content instanceof String) {
             System.out.println("Body: " + content.getClass().getName());
             System.out.println("Body: " + content);

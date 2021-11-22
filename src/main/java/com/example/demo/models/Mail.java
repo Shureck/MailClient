@@ -37,4 +37,9 @@ public class Mail {
         this.sendDate = sendDate;
         this.resDate = resDate;
     }
+
+    @Override
+    public String toString() {
+        return "subject "+ subject+ " body "+ body;
+    }
 }

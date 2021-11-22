@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -228,6 +228,20 @@
         }
     </style>
 
+    <script>
+        function goto(a){
+            s = window.location.href
+            if(parseInt(s.split("=")[1]) > 0) {
+                document.location.href = s.split("=")[0] + "=" + (parseInt(s.split("=")[1]) + a);
+            }
+            else{
+                if(a>0){
+                    document.location.href = "/?page=1"
+                }
+            }
+        }
+    </script>
+
 </head>
 <body>
 
@@ -300,181 +314,143 @@
                     </div>
                 </div>
                 <div class="btn-group float-right">
-                    <button type="button" class="btn btn-light">
+                    <button type="button" class="btn btn-light" onclick="goto(-1)">
                         <span class="fa fa-chevron-left"></span>
                     </button>
-                    <button type="button" class="btn btn-light">
+                    <button type="button" class="btn btn-light" onclick="goto(1)">
                         <span class="fa fa-chevron-right"></span>
                     </button>
                 </div>
             </div>
 
-            <ul class="messages">
-                <li class="message unread">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">
-                        <span class="fa fa-paper-clip"></span> Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
-                <li class="message">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">
-                        <span class="fa fa-paper-clip"></span> Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
-                <li class="message">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
-                <li class="message unread">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
-                <li class="message">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
+            <ul class="messages" id="asd">
 
-                    </a>
-                </li>
-                <li class="message">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
-                <li class="message unread">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
-                <li class="message">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
-                <li class="message">
-                    <a href="#">
-                        <div class="actions">
-                            <span class="action"><i class="fa fa-square-o"></i></span>
-                            <span class="action"><i class="fa fa-star-o"></i></span>
-                        </div>
-                        <div class="header">
-                            <span class="from">Lukasz Holeczek</span>
-                            <span class="date">Today, 3:47 PM</span>
-                        </div>
-                        <div class="title">
-                            Lorem ipsum dolor sit amet.
-                        </div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </a>
-                </li>
+                <script th:inline="javascript" charset="utf-8">
+                    /*<![CDATA[*/
+
+                    function htmlToElement(html) {
+                        var template = document.createElement('template');
+                        html = html.trim(); // Never return a text node of whitespace as the result
+                        template.innerHTML = html;
+                        return template.content.firstChild;
+                    }
+
+                    var trss = [{body: "Правильно ли я понял, что перемещение первого груза можно считать равным перемещению второго и из этого условия находить Т?\r\nЕсли да, то как лучше находить Т?\r\n\r\nОтправлено из приложения \"Почта\" для Windows 10\r\n\r\nОт: v m\r\nОтправлено: 5 февраля 2019 г. в 23:34\r\nКому: sashalev200149@gmail.com\r\nТема: RE: RE: Дематрон Очное\r\n\r\nобратите внимание: вам неизвестна сила Т1 (или Т2) !\r\nнужно чтобы она автоматически подбиралась в процессе движения так, чтобы общая длина нити оставалась неизменной.\r\nЭто можно достичь, введя большой коэффициент упругости нити\r\n\r\n\r\n05.02.2019, 23:28, Shureck channel <sashalev200149@gmail.com> \r\nСдаём послезавтра в 11:00. Пока постараемся сделать сами. Будут вопросы - напишем\r\n \r\nОтправлено из приложения \"Почта\" для Windows 10\r\n \r\nОт: v m\r\nОтправлено: 5 февраля 2019 г. в 22:43\r\nКому: sashalev200149@gmail.com\r\nТема: RE: Дематрон Очное\r\n \r\nПолучил.\r\nКогда сдаете?\r\n \r\n \r\n05.02.2019, 21:37, Shureck channel <sashalev200149@gmail.com> \r\nЗдравствуйте, очное\r\n \r\n \r\n\r\n<html xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" xmlns:m=\"http://schemas.microsoft.com/office/2004/12/omml\" xmlns=\"http://www.w3.org/TR/REC-html40\"><head><meta http-equiv=Content-Type content=\"text/html; charset=utf-8\"><meta name=Generator content=\"Microsoft Word 15 (filtered medium)\"><style><!--\r\n/* Font Definitions */\r\n@font-face\r\n\t{font-family:\"Cambria Math\";\r\n\tpanose-1:2 4 5 3 5 4 6 3 2 4;}\r\n@font-face\r\n\t{font-family:Calibri;\r\n\tpanose-1:2 15 5 2 2 2 4 3 2 4;}\r\n/* Style Definitions */\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0cm;\r\n\tmargin-bottom:.0001pt;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif;}\r\na:link, span.MsoHyperlink\r\n\t{mso-style-priority:99;\r\n\tcolor:blue;\r\n\ttext-decoration:underline;}\r\na:visited, span.MsoHyperlinkFollowed\r\n\t{mso-style-priority:99;\r\n\tcolor:#954F72;\r\n\ttext-decoration:underline;}\r\np.rmcoqvec, li.rmcoqvec, div.rmcoqvec\r\n\t{mso-style-name:rmcoqvec;\r\n\tmso-margin-top-alt:auto;\r\n\tmargin-right:0cm;\r\n\tmso-margin-bottom-alt:auto;\r\n\tmargin-left:0cm;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif;}\r\n.MsoChpDefault\r\n\t{mso-style-type:export-only;}\r\n@page WordSection1\r\n\t{size:612.0pt 792.0pt;\r\n\tmargin:2.0cm 42.5pt 2.0cm 3.0cm;}\r\ndiv.WordSection1\r\n\t{page:WordSection1;}\r\n--></style></head><body lang=RU link=blue vlink=\"#954F72\"><div class=WordSection1><p class=MsoNormal>Правильно ли я понял<span lang=EN-US>, </span>что перемещение первого груза можно считать равным перемещению второго и из этого условия находить Т<span lang=EN-US>?<o:p></o:p></span></p><p class=MsoNormal>Если да<span lang=EN-US>, </span>то как лучше находить Т<span lang=EN-US>?</span></p><p class=MsoNormal><o:p>&nbsp;</o:p></p><p class=MsoNormal>Отправлено из приложения &quot;<a href=\"https://go.microsoft.com/fwlink/?LinkId=550986\">Почта</a>&quot; для Windows 10</p><p class=MsoNormal><o:p>&nbsp;</o:p></p><div style='mso-element:para-border-div;border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0cm 0cm 0cm'><p class=MsoNormal style='border:none;padding:0cm'><b>От: </b><a href=\"mailto:vmak@rambler.ru\">v m</a><br><b>Отправлено: </b>5 февраля 2019 г. в 23:34<br><b>Кому: </b><a href=\"mailto:sashalev200149@gmail.com\">sashalev200149@gmail.com</a><br><b>Тема: </b>RE: RE: Дематрон Очное</p></div><p class=MsoNormal><o:p>&nbsp;</o:p></p><p class=MsoNormal>обратите внимание: вам неизвестна сила Т1 (или Т2) !<br>нужно чтобы она автоматически подбиралась в процессе движения так, чтобы общая длина нити оставалась неизменной.<br>Это можно достичь, введя большой коэффициент упругости нити</p><div><p class=MsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=MsoNormal><o:p>&nbsp;</o:p></p></div><blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'><div><p class=MsoNormal>05.02.2019, 23:28, Shureck channel &lt;<a href=\"mailto:sashalev200149@gmail.com\">sashalev200149@gmail.com</a>&gt; </p></div><div id=part0><div id=part2><div><div><div><div><div><p class=rmcoqvec>Сдаём послезавтра в 11<span lang=EN-US>:</span>00<span lang=EN-US>. </span>Пока постараемся сделать сами. Будут вопросы - напишем</p><p class=rmcoqvec>&nbsp;</p><p class=rmcoqvec>Отправлено из приложения &quot;<a href=\"https://go.microsoft.com/fwlink/?LinkId=550986\" target=\"_blank\">Почта</a>&quot; для Windows 10</p><p class=rmcoqvec>&nbsp;</p><div style='border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0cm 0cm 0cm'><p class=rmcoqvec><b>От: </b><a href=\"mailto:vmak@rambler.ru\" target=\"_blank\">v m</a><br><b>Отправлено: </b>5 февраля 2019 г. в 22:43<br><b>Кому: </b><a href=\"mailto:sashalev200149@gmail.com\" target=\"_blank\">sashalev200149@gmail.com</a><br><b>Тема: </b>RE: Дематрон Очное</p></div><p class=rmcoqvec>&nbsp;</p><p class=rmcoqvec>Получил.<br>Когда сдаете?</p><div><p class=rmcoqvec>&nbsp;</p></div><div><p class=rmcoqvec>&nbsp;</p></div><blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'><div><p class=rmcoqvec>05.02.2019, 21:37, Shureck channel &lt;<a href=\"mailto:sashalev200149@gmail.com\" target=\"_blank\">sashalev200149@gmail.com</a>&gt; </p></div><div id=RMCOQVECpart0><div id=RMCOQVECpart><div id=RMCOQVECpart1.2><div><div><div><div><div><p class=rmcoqvec>Здравствуйте, очное</p></div></div></div></div></div></div></div></div></blockquote><p class=rmcoqvec style='mso-margin-top-alt:5.0pt;margin-right:36.0pt;margin-bottom:5.0pt;margin-left:36.0pt'>&nbsp;</p></div></div></div></div></div></div></div></blockquote><p class=rmcoqvec style='mso-margin-top-alt:5.0pt;margin-right:36.0pt;margin-bottom:5.0pt;margin-left:36.0pt'>&nbsp;</p><p class=MsoNormal><o:p>&nbsp;</o:p></p></div></body></html>",
+                        bodyDesc: "Правильно ли я понял, что перемещение первого груза можно считать равным перемещению второго и из этого условия находить Т? Если да, то как лучше находить Т?   Отправлено из приложения \"Почта\" для Windows 10   От: v m Отправлено: 5 февраля 2019 г. в 23:34 Кому: sashalev200149@gmail.com Тема: RE: RE: Дематрон Очное   обратите внимание: вам неизвестна сила Т1 (или Т2) ! нужно чтобы она автоматически подбиралась в процессе движения так, чтобы общая длина нити оставалась неизменной. Это можно достичь, введя большой коэффициент упругости нити     05.02.2019, 23:28, Shureck channel <sashalev200149@gmail.com> Сдаём послезавтра в 11:00. Пока постараемся сделать сами. Будут вопросы - напишем   Отправлено из приложения \"Почта\" для Windows 10   От: v m Отправлено: 5 февраля 2019 г. в 22:43 Кому: sashalev200149@gmail.com Тема: RE: Дематрон Очное   Получил. Когда сдаете?     05.02.2019, 21:37, Shureck channel <sashalev200149@gmail.com> Здравствуйте, очное      ",
+                        fromAdress: "Shureck channel <sashalev200149@gmail.com>",
+                        id: 601,
+                        resDate: null,
+                        sendDate: "2019-02-05T22:44:03.000+03:00",
+                        subject: "RE: RE: Дематрон Очное"}]
+
+                    var messages = /*[[${MainMail}]]*/ trss;
+                    console.log(messages);
+
+                    // var html = message
+                    // let iframe = document.createElement('iframe');
+                    // iframe.srcdoc = html;
+                    // iframe.width = 500;
+                    // iframe.height = 500;
+                    // iframe.frameBorder = 0;
+                    // iframe.allowFullscreen = true;
+
+                    var theDiv = document.getElementById("asd");
+
+                    for(i=0;i<messages.length;i++) {
+
+                        msg = messages[i]
+
+                        try {
+
+                            function getPaging(str) {
+                                document.location.href = "/readMail?page="+str;
+                            }
+
+                            function b64DecodeUnicode(str) {
+                                // Going backwards: from bytestream, to percent-encoding, to original string.
+                                return decodeURIComponent(atob(str).split('').map(function(c) {
+                                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                                }).join(''));
+                            }
+                            s = b64DecodeUnicode(msg['fromAdress'].split('?')[3])
+                            console.log(msg['fromAdress'])
+                            console.log(s)
+
+                            unread = '<li class="message unread" onclick="getPaging(this.id)" id="'+msg['id']+'">\n' +
+                                '                    <a href="#">\n' +
+                                '                        <div class="actions">\n' +
+                                '                            <span class="action"><i class="fa fa-square-o"></i></span>\n' +
+                                '                            <span class="action"><i class="fa fa-star-o"></i></span>\n' +
+                                '                        </div>\n' +
+                                '                        <div class="header">\n' +
+                                '                            <span class="from">'+s+'</span>\n' +
+                                '                            <span class="date">\n' +
+                                '                        <span class="fa fa-paper-clip"></span>'+msg['sendDate']+'</span>\n' +
+                                '                        </div>\n' +
+                                '                        <div class="title">\n' +
+                                msg['subject'] +
+                                '                        </div>\n' +
+                                '                        <div class="description">\n' +
+                                msg['bodyDesc'].substr(0,100) + '...'       +
+                                '                        </div>\n' +
+                                '                    </a>\n' +
+                                '                </li>'
+
+                        } catch (err) {
+
+                            unread = '<li class="message unread" onclick="getPaging(this.id)" id="'+msg['id']+'">\n' +
+                                '                    <a href="#">\n' +
+                                '                        <div class="actions">\n' +
+                                '                            <span class="action"><i class="fa fa-square-o"></i></span>\n' +
+                                '                            <span class="action"><i class="fa fa-star-o"></i></span>\n' +
+                                '                        </div>\n' +
+                                '                        <div class="header">\n' +
+                                '                            <span class="from">'+msg['fromAdress']+'</span>\n' +
+                                '                            <span class="date">\n' +
+                                '                        <span class="fa fa-paper-clip"></span>'+msg['sendDate']+'</span>\n' +
+                                '                        </div>\n' +
+                                '                        <div class="title">\n' +
+                                msg['subject'] +
+                                '                        </div>\n' +
+                                '                        <div class="description">\n' +
+                                msg['bodyDesc'].substr(0,100) + '...'       +
+                                '                        </div>\n' +
+                                '                    </a>\n' +
+                                '                </li>'
+
+                        }
+
+
+
+                        read = '<li class="message">\n' +
+                            '                    <a href="#">\n' +
+                            '                        <div class="actions">\n' +
+                            '                            <span class="action"><i class="fa fa-square-o"></i></span>\n' +
+                            '                            <span class="action"><i class="fa fa-star-o"></i></span>\n' +
+                            '                        </div>\n' +
+                            '                        <div class="header">\n' +
+                            '                            <span class="from">Lukasz Holeczek</span>\n' +
+                            '                            <span class="date">\n' +
+                            '                        <span class="fa fa-paper-clip"></span> Today, 3:47 PM</span>\n' +
+                            '                        </div>\n' +
+                            '                        <div class="title">\n' +
+                            '                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n' +
+                            '                        </div>\n' +
+                            '                        <div class="description">\n' +
+                            '                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n' +
+                            '                        </div>\n' +
+                            '                    </a>\n' +
+                            '                </li>'/
+
+                        theDiv.insertAdjacentHTML('beforeend', unread);
+
+                    }
+
+
+                    /*]]>*/
+                </script>
+
+
             </ul>
         </main>
     </div>

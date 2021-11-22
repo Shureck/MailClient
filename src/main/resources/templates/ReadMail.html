@@ -309,14 +309,14 @@
                 </div>
             </div>
             <div class="details">
-                <div class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</div>
+                <div class="title" id="subject_t"></div>
                 <div class="header">
                     <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
                     <div class="from">
-                        <span>Lukasz Holeczek</span>
+                        <span id="fromMail">Lukasz Holeczek</span>
                         lukasz@bootstrapmaster.com
                     </div>
-                    <div class="date">Today, <b>3:47 PM</b></div>
+                    <div class="date" id="datee"></b></div>
                 </div>
                 <div class="content" id="Tesdd">
 
@@ -325,10 +325,15 @@
                 <script th:inline="javascript">
                     /*<![CDATA[*/
 
-                    var message = /*[[${MainModel}]]*/ 'default';
+                    var message = /*[[${ReadMail}]]*/ 'default';
                     console.log(message);
 
-                    var html = message
+                    document.getElementById("subject_t").innerText = message["subject"];
+                    document.getElementById("fromMail").innerText = message["fromAdress"];
+                    document.getElementById("datee").innerText = message["sendDate"];
+
+
+                    var html = message['body']
                     let iframe = document.createElement('iframe');
                     iframe.srcdoc = html;
                     iframe.width = 500;
@@ -342,35 +347,35 @@
                     /*]]>*/
                 </script>
 
-                <div class="attachments">
-                    <div class="attachment">
-                        <span class="badge badge-danger">zip</span> <b>bootstrap.zip</b> <i>(2,5MB)</i>
-                        <span class="menu">
-              <a href="#" class="fa fa-search"></a>
-              <a href="#" class="fa fa-share"></a>
-              <a href="#" class="fa fa-cloud-download"></a>
-            </span>
-                    </div>
-                    <div class="attachment">
-                        <span class="badge badge-info">txt</span> <b>readme.txt</b> <i>(7KB)</i>
-                        <span class="menu">
-              <a href="#" class="fa fa-search"></a>
-              <a href="#" class="fa fa-share"></a>
-              <a href="#" class="fa fa-cloud-download"></a>
-            </span>
-                    </div>
-                    <div class="attachment">
-                        <span class="badge badge-success">xls</span> <b>spreadsheet.xls</b> <i>(984KB)</i>
-                        <span class="menu">
-              <a href="#" class="fa fa-search"></a>
-              <a href="#" class="fa fa-share"></a>
-              <a href="#" class="fa fa-cloud-download"></a>
-            </span>
-                    </div>
+<!--                <div class="attachments">-->
+<!--                    <div class="attachment">-->
+<!--                        <span class="badge badge-danger">zip</span> <b>bootstrap.zip</b> <i>(2,5MB)</i>-->
+<!--                        <span class="menu">-->
+<!--              <a href="#" class="fa fa-search"></a>-->
+<!--              <a href="#" class="fa fa-share"></a>-->
+<!--              <a href="#" class="fa fa-cloud-download"></a>-->
+<!--            </span>-->
+<!--                    </div>-->
+<!--                    <div class="attachment">-->
+<!--                        <span class="badge badge-info">txt</span> <b>readme.txt</b> <i>(7KB)</i>-->
+<!--                        <span class="menu">-->
+<!--              <a href="#" class="fa fa-search"></a>-->
+<!--              <a href="#" class="fa fa-share"></a>-->
+<!--              <a href="#" class="fa fa-cloud-download"></a>-->
+<!--            </span>-->
+<!--                    </div>-->
+<!--                    <div class="attachment">-->
+<!--                        <span class="badge badge-success">xls</span> <b>spreadsheet.xls</b> <i>(984KB)</i>-->
+<!--                        <span class="menu">-->
+<!--              <a href="#" class="fa fa-search"></a>-->
+<!--              <a href="#" class="fa fa-share"></a>-->
+<!--              <a href="#" class="fa fa-cloud-download"></a>-->
+<!--            </span>-->
+<!--                    </div>-->
                 </div>
                 <form method="post" action="">
                     <div class="form-group">
-                        <textarea class="form-control" id="message" name="body" rows="12" placeholder="Click here to reply"></textarea>
+                        <textarea class="form-control" id="message" name="body" rows="5" placeholder="Click here to reply"></textarea>
                     </div>
                     <div class="form-group">
                         <button tabindex="3" type="submit" class="btn btn-success">Send message</button>
