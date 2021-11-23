@@ -398,6 +398,20 @@
 
                         } catch (err) {
 
+                            ttt = ""
+                            try {
+                                if (msg['fromAdress'].split('?')[2][0] == 'Q') {
+                                    str = msg['fromAdress'].split('?')[3]
+                                    str = str.replace(/={1}/g, '%');
+                                    ttt = decodeURI(str);
+                                } else {
+                                    ttt = msg['fromAdress']
+                                }
+                            }
+                            catch (err){
+                                ttt = msg['fromAdress']
+                            }
+
                             unread = '<li class="message unread" onclick="getPaging(this.id)" id="'+msg['id']+'">\n' +
                                 '                    <a href="#">\n' +
                                 '                        <div class="actions">\n' +
@@ -405,7 +419,7 @@
                                 '                            <span class="action"><i class="fa fa-star-o"></i></span>\n' +
                                 '                        </div>\n' +
                                 '                        <div class="header">\n' +
-                                '                            <span class="from">'+msg['fromAdress']+'</span>\n' +
+                                '                            <span class="from">'+ttt+'</span>\n' +
                                 '                            <span class="date">\n' +
                                 '                        <span class="fa fa-paper-clip"></span>'+msg['sendDate']+'</span>\n' +
                                 '                        </div>\n' +

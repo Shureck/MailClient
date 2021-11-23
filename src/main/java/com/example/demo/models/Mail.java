@@ -28,6 +28,10 @@ public class Mail {
     private Date sendDate;
     @Column(name = "resDate")
     private Date resDate;
+    @Column(name = "unread")
+    private boolean unread;
+    @Column(name = "favourites")
+    private boolean favourites;
 
     public Mail(String fromAdress, String subject, String bodyDesc, String body, Date sendDate, Date resDate) {
         this.subject = subject;

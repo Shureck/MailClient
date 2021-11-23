@@ -2,11 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.models.Mail;
 import com.example.demo.repo.MailRepo;
-import org.jsoup.Jsoup;
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.util.PythonInterpreter;
+import com.example.demo.treading.MailQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,66 +16,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.mail.*;
 import javax.mail.internet.ContentType;
 import javax.mail.internet.MimeMultipart;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Properties;
 
 @Controller
 public class getMail {
 
-    private String getTextFromMessage(Message message) throws IOException, MessagingException {
-        String result = "";
-        if (message.isMimeType("text/plain")) {
-            result = message.getContent().toString();
-        } else if (message.isMimeType("multipart/*")) {
-            MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
-            result = getTextFromMimeMultipart(mimeMultipart);
-        }
-        return result;
-    }
-
-    private String getTextFromMimeMultipart(
-            MimeMultipart mimeMultipart) throws IOException, MessagingException {
-
-        int count = mimeMultipart.getCount();
-        if (count == 0)
-            throw new MessagingException("Multipart with no body parts not supported.");
-        boolean multipartAlt = new ContentType(mimeMultipart.getContentType()).match("multipart/alternative");
-        if (multipartAlt)
-            // alternatives appear in an order of increasing
-            // faithfulness to the original content. Customize as req'd.
-            return getTextFromBodyPart(mimeMultipart.getBodyPart(count - 1));
-        String result = "";
-        for (int i = 0; i < count; i++) {
-            BodyPart bodyPart = mimeMultipart.getBodyPart(i);
-            result += getTextFromBodyPart(bodyPart);
-        }
-        return result;
-    }
-
-    private String getTextFromBodyPart(
-            BodyPart bodyPart) throws IOException, MessagingException {
-
-        String result = "";
-        if (bodyPart.isMimeType("text/plain")) {
-            result = (String) bodyPart.getContent();
-        } else if (bodyPart.isMimeType("text/html")) {
-            String html = (String) bodyPart.getContent();
-            result = org.jsoup.Jsoup.parse(html).text();
-        } else if (bodyPart.getContent() instanceof MimeMultipart){
-            result = getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
-        }
-        return result;
-    }
-
     @Autowired
     MailRepo mailRepo;
     @Autowired
     private JavaMailSender emailSender;
+
+    private GetMessages getMessages = new GetMessages();
+
+    private String userName = "sashalev200149@gmail.com";
+    private String password = "txrwzaqkdebrjizs";
+
+    private String protocol = "imap";
+    private String host = "imap.yandex.ru";
+    private String port = "993";
 
     @GetMapping("/")
     public String mainMail(Model model, Integer page) throws MessagingException, IOException {
@@ -184,7 +140,7 @@ public class getMail {
         content = messages[page].getContent();
         System.out.println("Body21: " + content.getClass().getName());
         System.out.println("Body22: " + content);
-        System.out.println("Body23: " + getTextFromMessage(messages[page]));
+        System.out.println("Body23: " + getMessages.getTextFromMessage(messages[page]));
         System.out.println("Body24: " + messages[page].getFlags());
         if(content instanceof String) {
             System.out.println("Body: " + content.getClass().getName());
@@ -212,88 +168,45 @@ public class getMail {
         return "ReadMail";
     }
 
-    @GetMapping("/test")
-    public String getMsg() throws MessagingException, IOException {
+    @GetMapping("/login")
+    public String getMsg(Model model) throws MessagingException, IOException {
         final Properties props = new Properties();
 
+        return "create-project";
+    }
+
+    @GetMapping("/download")
+    public String download(Model model) throws MessagingException, IOException {
+        final Properties props = new Properties();
+
+        mailRepo.deleteAll();
+
+        for (int i=0;i<15;i++){
+            System.out.println("Index "+i);
+            mailRepo.saveAll(getMessages.downloadEmails(protocol, host, port, userName, password, i, 10));
+        }
+
+        return "redirect:"+"/";
+    }
+
+    @PostMapping("/test")
+    public String login(Model model, String email, String password) throws MessagingException, IOException {
+        final Properties props = new Properties();
         mailRepo.deleteAll();
 
         //XTrustProvider.install();
 
         // System.setProperty("sun.security.ssl.allowUnsafeRenegotiation", true);
 
-        props.setProperty("mail.pop3.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.setProperty("mail.pop3.socketFactory.fallback", "false");
-        props.setProperty( "mail.pop3.host", "pop.gmail.com" );
-        props.setProperty( "mail.pop3.user", "sashalev200149@gmail.com");
-        props.setProperty( "mail.pop3.password", "txrwzaqkdebrjizs");
-        props.setProperty( "mail.pop3.ssl.enable", "true");
-        props.setProperty( "mail.pop3.port", "995" );
-        props.setProperty( "mail.pop3.auth", "true" );
-        props.setProperty("mail.pop3.starttls.enable", "false");
-       /* props.setProperty( "mail.pop3.starttls.enable", "true" );
-        props.setProperty( "mail.pop3.starttls.required", "true" );*/
 
-        Authenticator auth = new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("sashalev200149@gmail.com", "txrwzaqkdebrjizs");
-            }
-        };
+//        String userName = "sashalev200149@gmail.com";
+//        String password = "txrwzaqkdebrjizs";
 
-        Session session  = Session.getInstance(props);
-        session.setDebug(true);
+        this.userName = email;
+        this.password = password;
 
+        mailRepo.saveAll(getMessages.downloadEmails(protocol, host, port, email, password, 0, 10));
 
-
-        session = Session.getDefaultInstance(props, auth);
-
-        // 4. Get the POP3 store provider and connect to the store.
-        Store store = session.getStore("pop3");
-        store.connect("pop.gmail.com","sashalev200149@gmail.com", "txrwzaqkdebrjizs");
-
-        // 5. Get folder and open the INBOX folder in the store.
-        Folder inbox = store.getFolder("INBOX");
-        inbox.open(Folder.READ_ONLY);
-
-        // 6. Retrieve the messages from the folder.
-        Message[] messages = inbox.getMessages();
-        System.out.println(messages.length);
-        for(int i=messages.length-1; i>0; i--){
-            System.out.println(messages[i].getSubject());
-
-//            messages[i].writeTo();
-
-            String mimeType = messages[i].getContentType();
-            System.out.println("Message is a " + mimeType);
-            Object content = messages[i].getContent();
-            String bodyContent = "";
-            if(content instanceof String) {
-                System.out.println("Body: " + content);
-                bodyContent = content.toString();
-            } else if(content instanceof MimeMultipart) {
-                MimeMultipart multi = (MimeMultipart)content;
-                System.out.println("We have a "+ multi.getContentType());
-                for(int j = 0; j < multi.getCount(); ++j) {
-                    BodyPart bo = multi.getBodyPart(j);
-                    System.out.println("Content "+j+" is a " + bo.getContentType());
-                    //Now that body part could again be a MimeMultipart...
-                    bodyContent += bo.getContent();
-                    System.out.println("Loooool "+bodyContent);
-                    //possibly build a recurion here -> the logic is the same as for mm.getContent() above
-                }
-            } else {
-                System.out.println("Some other content: " + content.getClass().getName());
-            }
-
-            mailRepo.save(new Mail(messages[i].getFrom()[0].toString(),messages[i].getSubject(),getTextFromMessage(messages[i]),
-                                bodyContent,messages[i].getSentDate(), messages[i].getReceivedDate()));
-
-        }
-
-        // 7. Close folder and close store.
-        inbox.close(false);
-        store.close();
-        return "DFD";
+        return "redirect:"+"/";
     }
 }
